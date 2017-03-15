@@ -1,0 +1,65 @@
+#include <stdio.h>
+#define NUMBER 100000000
+int main() {
+    long i, flag, j, mask, subsequence, icopy, power, subisprime, k, maskcopy, divider, digit;
+    for (i=11;i<NUMBER;i+=2) /* even numbers are excluded(not primes) */
+        flag=1;
+        divider=1000000000;
+        do {
+            digit=(i%divider)/(divider/10);
+            if (digit==2 || digit==3 || digit==5 || digit==7) {    /* if digit is prime */
+                i=i/divider*divider+(digit+1)*divider/10;   /* start i again from a later number */
+            }
+         divider/=10;
+        } while (divider>1); /* divider checks the digits of the number */
+        if (i%2==0) {
+            i++;    /* however, the above piece of code leads to even numbers, this prevents that */
+        }
+        j=3;
+        while (flag && j*j<=i) { /* if i is not divided by 2, no need to double check even dividers */
+        if (i%j==0) {
+                flag=0; /* flag checks if i is prime */
+            }
+            j+=2;
+        }
+        if (flag) {
+            mask=1;
+          do {      /* find all subsequences */
+                maskcopy=mask;
+                subsequence=0;
+                icopy=i;
+                power=1;
+                while (icopy!=0) {
+                    if (maskcopy%2==1) {
+                        subsequence+=(icopy%10)*power;
+                        power*=10;
+                    }
+                    maskcopy/=2;
+                    icopy/=10;
+                }                   /* end of finding each subsequence */
+                subisprime=0;
+                if (subsequence<i) { /* only if subsequence is not i itself */
+                    if ((subsequence>2 && subsequence%2!=0) || subsequence==2) {
+                        subisprime=1; /* if subsequence is not even check for other dividers */
+                    }
+                    if (subsequence>2) {  /* 1 not counted as prime */
+                        k=3;
+                        while (subisprime && k*k<=subsequence) {
+                            if (subsequence%k==0) {
+                                subisprime=0;
+                            }
+                            k+=2;
+                        }
+                    }
+                }
+                mask++;
+            } while (subsequence<i && subisprime==0); {
+            if (subisprime==0) {
+                printf("%ld\n", i);
+            if (subisprime==0) {
+                printf("%ld\n", i);
+}
+}
+}
+}
+}
